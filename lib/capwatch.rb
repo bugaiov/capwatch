@@ -1,17 +1,23 @@
-require 'colorize'
-require 'terminal-table'
-
-require 'capwatch/version'
-
 require 'json'
 require 'optparse'
 require 'ostruct'
 require 'net/http'
 
+require 'colorize'
+require 'terminal-table'
+
+require 'capwatch/version'
+
 module Capwatch
+  class CoinMarketCap
+    def self.fetch
+      JSON.parse(Net::HTTP.get(URI('http://api.coinmarketcap.com/v1/ticker/')))
+    end
+  end
+
   class Calculator
     def self.fund_hash(fund, coinmarketcap_json)
-      table_array = []
+      table = []
 
       title = fund['name']
       symbols = fund['symbols']
@@ -54,7 +60,7 @@ module Capwatch
         percent_change_1h = x['percent_change_1h'].to_f || 0
         percent_change_24h = x['percent_change_24h'].to_f || 0
         percent_change_7d = x['percent_change_7d'].to_f || 0
-        table_array << [
+        table << [
           asset_name,
           quant_value,
           price,
@@ -80,7 +86,7 @@ module Capwatch
         sum + n['percent_change_7d'].to_f * distribution_hash[n['symbol']].to_f
       end
 
-      footer_row = [
+      footer = [
         '',
         '',
         '',
@@ -93,12 +99,12 @@ module Capwatch
         a_7d
       ]
 
-      table_array.sort_by! { |a| -a[6].to_f } # DIST (%)
+      table.sort_by! { |a| -a[6].to_f } # DIST (%)
 
       {}
         .merge(title: title)
-        .merge(table_array: table_array)
-        .merge(footer_row: footer_row)
+        .merge(table: table)
+        .merge(footer: footer)
     end
   end
 
@@ -116,14 +122,8 @@ module Capwatch
     end
   end
 
-  class CoinMarketCap
-    def self.fetch
-      JSON.parse(Net::HTTP.get(URI('http://api.coinmarketcap.com/v1/ticker/')))
-    end
-  end
-
   module ConsoleFormatter
-    def fmt(n)
+    def format_usd(n)
       '$' + n.round(2).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     end
 
@@ -155,9 +155,9 @@ module Capwatch
     extend ConsoleFormatter
 
     def self.colorize_table(hash)
-      hash[:table_array].each do |x|
-        x[2] = fmt(x[2])
-        x[3] = fmt(x[3])
+      hash[:table].each do |x|
+        x[2] = format_usd(x[2])
+        x[3] = format_usd(x[3])
         x[4] = format_btc(x[4])
         x[5] = format_eth(x[5])
         x[6] = format_percent(x[6])
@@ -165,12 +165,12 @@ module Capwatch
         x[8] = condition_color(format_percent(x[8]))
         x[9] = condition_color(format_percent(x[9]))
       end
-      hash[:footer_row][3] = fmt(hash[:footer_row][3])
-      hash[:footer_row][4] = format_btc(hash[:footer_row][4])
-      hash[:footer_row][5] = format_eth(hash[:footer_row][5])
-      hash[:footer_row][7] = condition_color(format_percent(hash[:footer_row][7]))
-      hash[:footer_row][8] = condition_color(format_percent(hash[:footer_row][8]))
-      hash[:footer_row][9] = condition_color(format_percent(hash[:footer_row][9]))
+      hash[:footer][3] = format_usd(hash[:footer][3])
+      hash[:footer][4] = format_btc(hash[:footer][4])
+      hash[:footer][5] = format_eth(hash[:footer][5])
+      hash[:footer][7] = condition_color(format_percent(hash[:footer][7]))
+      hash[:footer][8] = condition_color(format_percent(hash[:footer][8]))
+      hash[:footer][9] = condition_color(format_percent(hash[:footer][9]))
       hash
     end
 
@@ -198,11 +198,11 @@ module Capwatch
           '%(24H)',
           '%(7D)'
         ]
-        hash[:table_array].each do |x|
+        hash[:table].each do |x|
           t << x
         end
         t.add_separator
-        t.add_row hash[:footer_row]
+        t.add_row hash[:footer]
       end
 
       table
