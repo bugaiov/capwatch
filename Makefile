@@ -12,3 +12,7 @@ clean:
 
 test:
 	bundle exec rspec
+
+push: build
+	gem push capwatch-*.gem
+	rm capwatch-*.gem
