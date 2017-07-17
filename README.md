@@ -2,6 +2,8 @@
 
 Watch you cryptoportfolio in a console
 
+![Demo](https://i.imgur.com/XioyQQo.png)
+
 ## Installation
 
     $ gem install capwatch
