@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'capwatch'
+include Capwatch
+
+options = CLI.parse(ARGV)
+fund = JSON.parse(File.open(ARGV[0] || File.expand_path('~/.capwatch')).read)
+
+loop do
+  table = Calculator.fund_hash(fund, CoinMarketCap.fetch)
+  system('clear')
+  puts Console.draw_table(table)
+  sleep options.tick
+end
