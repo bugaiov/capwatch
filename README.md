@@ -1,6 +1,8 @@
 # Capwatch
 
 [![Build Status](https://travis-ci.org/bugaiov/capwatch.svg?branch=master)](https://travis-ci.org/bugaiov/capwatch)
+[![Coverage Status](https://coveralls.io/repos/github/bugaiov/capwatch/badge.svg?branch=master)](https://coveralls.io/github/bugaiov/capwatch?branch=master)
+[![Gem Version](https://badge.fury.io/rb/capwatch.svg)](https://badge.fury.io/rb/capwatch)
 
 Watch your cryptoportfolio in a console
 
