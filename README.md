@@ -1,6 +1,6 @@
 # Capwatch
 
-Watch you cryptoportfolio in a console
+Watch your cryptoportfolio in a console
 
 ![Basic Fund](http://i.imgur.com/BEu0KeU.png)
 
