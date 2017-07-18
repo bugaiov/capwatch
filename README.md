@@ -2,7 +2,7 @@
 
 Watch you cryptoportfolio in a console
 
-![Demo](https://i.imgur.com/XioyQQo.png)
+![Basic Fund](http://i.imgur.com/BEu0KeU.png)
 
 ## Installation
 
@@ -11,30 +11,27 @@ Watch you cryptoportfolio in a console
 ```bash
 cat <<EOT > ~/.capwatch
 {
-  "name": "My Fund",
+  "name": "Basic Fund",
   "symbols": {
-    "ETH": 10,
-    "BTC": 10,
-    "XRP": 1,
-    "LTC": 1,
-    "ETC": 1,
-    "DASH": 1,
-    "XEM": 1,
-    "MIOTA": 1,
-    "XMR": 1,
-    "STRAT": 1,
-    "BCC": 1,
-    "EOS": 1,
-    "USDT": 1,
-    "ZEC": 1,
-    "ANS": 1,
-    "VERI": 1,
-    "BTS": 1,
-    "STEEM": 1,
-    "BCN": 1
+    "MAID": 25452.47,
+    "GAME": 22253.51,
+    "ANS": 3826.53,
+    "FCT": 525.67875,
+    "SC": 4152770,
+    "DCR": 453.22,
+    "BTC": 8.219,
+    "ETH": 166.198,
+    "KMD": 19056.20,
+    "LSK": 5071.42
   }
 }
 EOT
 ```
 
     $ capwatch
+
+## Fund Examples
+
+Fund examples can be found [here](funds/demo)
+
+Demo funds taken from www.bluemagic.info
