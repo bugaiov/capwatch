@@ -1,5 +1,7 @@
 # Capwatch
 
+[![Build Status](https://travis-ci.org/bugaiov/capwatch.svg?branch=master)](https://travis-ci.org/bugaiov/capwatch)
+
 Watch your cryptoportfolio in a console
 
 ![Demo](http://i.imgur.com/ZkrFDtL.png)
