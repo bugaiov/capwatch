@@ -2,7 +2,7 @@
 
 Watch your cryptoportfolio in a console
 
-![Basic Fund](http://i.imgur.com/BEu0KeU.png)
+![Demo](http://i.imgur.com/ZkrFDtL.png)
 
 ## Installation
 
@@ -33,5 +33,5 @@ EOT
 ## Fund Examples
 
 Fund examples can be found [here](funds/demo)
-
 Demo funds taken from www.bluemagic.info
+Data is being processed from from http://coinmarketcap.com
