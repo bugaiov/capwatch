@@ -33,5 +33,7 @@ EOT
 ## Fund Examples
 
 Fund examples can be found [here](funds/demo)
+
 Demo funds taken from www.bluemagic.info
+
 Data is being processed from from http://coinmarketcap.com
