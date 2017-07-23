@@ -1,3 +1,6 @@
+require 'optparse'
+require 'ostruct'
+
 module Capwatch
   class CLI
     def self.parse(args)

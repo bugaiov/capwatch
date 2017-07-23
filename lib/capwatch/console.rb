@@ -54,25 +54,23 @@ module Capwatch
       table
     end
 
-    private
-
-    def format_usd(n)
+    def self.format_usd(n)
       '$' + n.round(2).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     end
 
-    def format_btc(value)
+    def self.format_btc(value)
       format('฿%.2f', value)
     end
 
-    def format_eth(value)
+    def self.format_eth(value)
       format('Ξ%.2f', value)
     end
 
-    def format_percent(value)
+    def self.format_percent(value)
       format('%.2f%', value)
     end
 
-    def condition_color(value)
+    def self.condition_color(value)
       percent_value = value.to_f
       if percent_value > 1
         value.green

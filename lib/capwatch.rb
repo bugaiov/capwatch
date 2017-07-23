@@ -1,8 +1,3 @@
-require 'json'
-require 'optparse'
-require 'ostruct'
-require 'net/http'
-
 require 'colorize'
 require 'terminal-table'
 
