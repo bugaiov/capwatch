@@ -41,25 +41,19 @@ module Capwatch
         distribution_float = value_usd / total_value_usd
         distribution_hash[symbol] = distribution_float
         distribution = distribution_float * 100
-        percent_change_1h = x['percent_change_1h'].to_f || 0
         percent_change_24h = x['percent_change_24h'].to_f || 0
         percent_change_7d = x['percent_change_7d'].to_f || 0
         table << [
           asset_name,
-          quant_value,
           price,
+          quant_value,
           value_usd,
           value_btc,
           value_eth,
           distribution,
-          percent_change_1h,
           percent_change_24h,
           percent_change_7d
         ]
-      end
-
-      a_1h = filtered_response_json.inject(0) do |sum, n|
-        sum + n['percent_change_1h'].to_f * distribution_hash[n['symbol']].to_f
       end
 
       a_24h = filtered_response_json.inject(0) do |sum, n|
@@ -78,12 +72,12 @@ module Capwatch
         total_value_btc,
         total_value_eth,
         '',
-        a_1h,
         a_24h,
         a_7d
       ]
 
-      table.sort_by! { |a| -a[6].to_f } # DIST (%)
+      table.sort_by! { |e| -e[3].to_f }
+      table.each.with_index(1) { |e, i| e[0] = "#{i}. #{e[0]}" }
 
       {}
         .merge(title: title)
