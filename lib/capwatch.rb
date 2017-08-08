@@ -1,8 +1,11 @@
 require 'colorize'
 require 'terminal-table'
+require 'telegram_bot'
 
 require 'capwatch/version'
+require 'capwatch/fundparser'
 require 'capwatch/coinmarketcap'
 require 'capwatch/calculator'
 require 'capwatch/cli'
 require 'capwatch/console'
+require 'capwatch/telegram'

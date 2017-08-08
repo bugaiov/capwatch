@@ -34,6 +34,25 @@ EOT
 
     $ capwatch
 
+
+## Telegram
+
+If you want to get portfolio notifications on demand to your telegram, you'll need:
+
+1. Create a telegram bot via [BotFather](https://core.telegram.org/bots)
+2. Get the bot `token`
+3. Start capwatch with the bot `token` in hand
+
+
+        $capwatch -e <bot_token>
+
+Currently Capwatch supports only two commands
+
+- `/watch` - shows the entire portfolio
+- `/cap` - shows only the footer of the portfolio, e.g. summaries
+
+Remember to start it on a server in a tmux window or as a daemon.
+
 ## Fund Examples
 
 Fund examples can be found [here](funds/demo)
@@ -41,3 +60,7 @@ Fund examples can be found [here](funds/demo)
 Demo funds taken from www.bluemagic.info
 
 Data is being processed from from http://coinmarketcap.com
+
+## Todo
+- [ ] Write Tests
+- [ ] Re-factor the table class

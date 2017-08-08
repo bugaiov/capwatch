@@ -1,25 +1,35 @@
 module Capwatch
   class Console
-    def self.colorize_table(hash)
+    def self.format_table(hash)
       hash[:table].each do |x|
         x[1] = format_usd(x[1])
         x[3] = format_usd(x[3])
         x[4] = format_btc(x[4])
         x[5] = format_eth(x[5])
         x[6] = format_percent(x[6])
-        x[7] = condition_color(format_percent(x[7]))
-        x[8] = condition_color(format_percent(x[8]))
+        x[7] = format_percent(x[7])
+        x[8] = format_percent(x[8])
       end
       hash[:footer][3] = format_usd(hash[:footer][3])
       hash[:footer][4] = format_btc(hash[:footer][4])
       hash[:footer][5] = format_eth(hash[:footer][5])
-      hash[:footer][7] = condition_color(format_percent(hash[:footer][7]))
-      hash[:footer][8] = condition_color(format_percent(hash[:footer][8]))
+      hash[:footer][7] = format_percent(hash[:footer][7])
+      hash[:footer][8] = format_percent(hash[:footer][8])
+      hash
+    end
+
+    def self.colorize_table(hash)
+      hash[:table].each do |x|
+        x[7] = condition_color(x[7])
+        x[8] = condition_color(x[8])
+      end
+      hash[:footer][7] = condition_color(hash[:footer][7])
+      hash[:footer][8] = condition_color(hash[:footer][8])
       hash
     end
 
     def self.draw_table(hash)
-      hash = colorize_table(hash)
+      hash = colorize_table(format_table(hash))
       table = Terminal::Table.new do |t|
         t.title = hash[:title].upcase
         t.style = {

@@ -10,6 +10,9 @@ module Capwatch
         opts.on('-t', '--tick [Integer]', Integer, 'Tick Interval') do |t|
           options.tick = t
         end
+        opts.on('-e', '--telegram-token=', String) do |val|
+          options.telegram = val
+        end
       end
       opt_parser.parse!(args)
       options
