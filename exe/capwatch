@@ -21,7 +21,7 @@ else
     fund = Fund.new(provider: provider, config: config)
     system("clear")
     puts fund.console_table
-    puts "\nHey there! This is a Demo Fund. Please set up your fund by editing the \"~/.capwatch\" in your home directory".green if config.demo?
+    puts "\nHey there! This is a Demo Fund. Please set up your fund by editing the \"#{FundConfig::DEMO_CONFIG_FILE}\" in your home directory".green if config.demo?
     sleep options.tick
   end
 end

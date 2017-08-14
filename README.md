@@ -13,16 +13,15 @@ Watch your cryptoportfolio in a console
     $ gem install capwatch
     $ capwatch
 
-Don't forget to edit `~/.capwatch` with the amount of cryptocurrencies that you hold. Also please change the name of the fund. 🤔
+Don't forget to edit `~/.capwatch` with the amount of cryptocurrencies that you hold.
 
 ## Telegram
 
-If you want to get portfolio notifications on demand to your telegram, you'll need:
+If you want to get portfolio notifications on demand into your telegram, you'll need:
 
 1. Create a telegram bot via [BotFather](https://core.telegram.org/bots)
 2. Get the bot `token`
 3. Start capwatch with the bot `token` in hand
-
 
         $capwatch -e <bot_token>
 
@@ -33,11 +32,10 @@ Currently Capwatch supports only two commands
 
 Remember to start it on a server in a tmux window or as a daemon.
 
-## Fund Examples
+## Data Providers
 
-Fund examples can be found [here](spec/fixtures/funds)
+- http://coinmarketcap.com
 
-Demo funds taken from www.bluemagic.info
+## Demo Funds
 
-Data is being processed from from http://coinmarketcap.com
-
+Fund examples can be found [here](spec/fixtures/funds) which were taken from [here](www.bluemagic.info)

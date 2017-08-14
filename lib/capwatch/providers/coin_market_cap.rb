@@ -31,7 +31,7 @@ module Capwatch
         response.each do |coin_json|
           Capwatch::Exchange.rate(
             coin_json['symbol'],
-            BigDecimal(coin_json["price_btc"].to_s)
+            coin_json["price_btc"].to_f
           )
         end
       end
@@ -40,11 +40,11 @@ module Capwatch
         provider_coin = fetched_json.find { |c| c["symbol"] == coin.symbol }
         fail NoCoinInProvider, "No #{coin.symbol} in provider response" if provider_coin.nil?
         coin.name               = provider_coin["name"]
-        coin.price_usd          = BigDecimal(provider_coin["price_usd"].to_s)
-        coin.price_btc          = BigDecimal(provider_coin["price_btc"].to_s)
-        coin.percent_change_1h  = BigDecimal(provider_coin["percent_change_1h"].to_s)
-        coin.percent_change_24h = BigDecimal(provider_coin["percent_change_24h"].to_s)
-        coin.percent_change_7d  = BigDecimal(provider_coin["percent_change_7d"].to_s)
+        coin.price_usd          = provider_coin["price_usd"].to_f
+        coin.price_btc          = provider_coin["price_btc"].to_f
+        coin.percent_change_1h  = provider_coin["percent_change_1h"].to_f
+        coin.percent_change_24h = provider_coin["percent_change_24h"].to_f
+        coin.percent_change_7d  = provider_coin["percent_change_7d"].to_f
       end
 
     end # class CoinMarketCap

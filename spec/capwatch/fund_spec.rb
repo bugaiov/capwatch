@@ -108,7 +108,7 @@ RSpec.describe Capwatch::Fund do
 
       it "#price_eth" do
         subject
-        # expect(subject["BTC"].price_eth).to eq 1 / 0.0731086
+        expect(subject["BTC"].price_eth).to eq 1 / 0.0731086
         expect(subject["ETH"].price_eth).to eq 1
       end
 
@@ -119,22 +119,22 @@ RSpec.describe Capwatch::Fund do
       end
 
       it "#value_usd" do
-        # expect(subject["BTC"].value_usd).to eq 4082.92 * 10
-        # expect(subject["ETH"].value_usd).to eq 298.824 * 20
+        expect(subject["BTC"].value_usd).to eq 4082.92 * 10
+        expect(subject["ETH"].value_usd).to eq 298.824 * 20
       end
 
       it "#value_eth" do
-        # expect(subject["BTC"].value_eth).to eq BigDecimal("10") * BigDecimal("1.0") / BigDecimal("0.0731086")
+        expect(subject["BTC"].value_eth).to eq 10 * 1.0 / 0.0731086
         expect(subject["ETH"].value_eth).to eq 1 * 20
       end
 
       it "#distribution" do
-        # expect(subject["BTC"].distribution).to eq BigDecimal(1.0.to_s) * BigDecimal(10) / (BigDecimal(1.0.to_s) * BigDecimal(10) + BigDecimal(0.0731086.to_s) * BigDecimal(20))
-        # expect(subject["ETH"].distribution).to eq BigDecimal(0.0731086.to_s) * BigDecimal(20) / (BigDecimal(1.0.to_s) * BigDecimal(10) + BigDecimal(0.0731086.to_s) * BigDecimal(20))
+        expect(subject["BTC"].distribution).to eq 1.0 * 10 / (1.0 * 10 + 0.0731086 * 20)
+        expect(subject["ETH"].distribution).to eq 0.0731086 * 20 / (1.0 * 10 + 0.0731086 * 20)
       end
 
       it "total distribution is 100%" do
-        expect((subject["BTC"].distribution + subject["ETH"].distribution).to_f).to eq 1.0
+        expect((subject["BTC"].distribution + subject["ETH"].distribution)).to eq 1.0
       end
 
     end
@@ -150,19 +150,19 @@ RSpec.describe Capwatch::Fund do
       end
 
       it "#value_eth" do
-        # expect(subject.value_eth).to eq 1 * 20 + BigDecimal("10") * BigDecimal("0.0731086") / BigDecimal("1.0")
+        expect(subject.value_eth).to eq 1 * 20 + 10 / 0.0731086 / 1.0
       end
 
       it "#percent_change_1h" do
-        expect(subject.percent_change_1h.to_f).to eq(-0.44947329703305795795072696572e0)
+        expect(subject.percent_change_1h).to eq -0.44947329703305805
       end
 
       it "#percent_change_24h" do
-        expect(subject.percent_change_24h.to_f).to eq(0.455451072623932008697827951456e1)
+        expect(subject.percent_change_24h).to eq 4.554510726239321
       end
 
       it "#percent_change_7d" do
-        expect(subject.percent_change_7d.to_f).to eq(0.2441910366726306323094785179376e2)
+        expect(subject.percent_change_7d).to eq 24.419103667263066
       end
 
     end

@@ -3,10 +3,13 @@
 module Capwatch
   class FundConfig
 
+    DEMO_CONFIG_NAME = "Your Demo Fund"
+    DEMO_CONFIG_FILE = "~/.capwatch"
+
     attr_accessor :name, :positions, :config_path
 
     def initialize(config_path = nil)
-      @config_path = config_path || File.expand_path("~/.capwatch")
+      @config_path = config_path || File.expand_path(DEMO_CONFIG_FILE)
       demo_config! unless config_exists?
     end
 
@@ -26,13 +29,13 @@ module Capwatch
       positions.map do |symbol, quantity|
         Coin.new do |coin|
           coin.symbol   = symbol
-          coin.quantity = BigDecimal(quantity.to_s)
+          coin.quantity = quantity
         end
       end
     end
 
     def demo?
-      name == "Your Demo Fund"
+      name == DEMO_CONFIG_NAME
     end
 
     private
@@ -50,16 +53,15 @@ module Capwatch
     end
 
     def demo_fund
-      demo_fund = File.expand_path(
-        File.join(__dir__, "..", "..", "spec", "fixtures", "funds", "basic.json")
-      )
+      file_path = File.join(__dir__, "..", "..", "spec", "fixtures", "funds", "basic.json")
+      demo_fund = File.expand_path(file_path)
       File.open(demo_fund).read
     end
 
     def demo_config!
       @config_path = File.expand_path(@config_path)
       File.open(@config_path, "w") do |file|
-        file.write(demo_fund.gsub!("Basic Fund", "Your Demo Fund"))
+        file.write(demo_fund.gsub!("Basic Fund", DEMO_CONFIG_NAME))
       end
     end
 
