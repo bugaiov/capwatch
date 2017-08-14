@@ -6,7 +6,7 @@
 
 Watch your cryptoportfolio in a console
 
-![Demo](http://i.imgur.com/ZkrFDtL.png)
+![Demo](http://i.imgur.com/wPZ9Rfe.png)
 
 ## Installation
 
