@@ -1,11 +1,17 @@
-require 'colorize'
-require 'terminal-table'
-require 'telegram_bot'
+# frozen_string_literal: true
 
-require 'capwatch/version'
-require 'capwatch/fundparser'
-require 'capwatch/coinmarketcap'
-require 'capwatch/calculator'
-require 'capwatch/cli'
-require 'capwatch/console'
-require 'capwatch/telegram'
+require "colorize"
+require "terminal-table"
+require "telegram_bot"
+
+require "capwatch/version"
+require "capwatch/fund"
+require "capwatch/fund_config"
+require "capwatch/fund_calculator"
+require "capwatch/providers/coin_market_cap"
+require "capwatch/exchange"
+require "capwatch/cli"
+require "capwatch/coin"
+require "capwatch/portfolio"
+require "capwatch/console"
+require "capwatch/telegram"

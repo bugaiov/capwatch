@@ -1,17 +1,29 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require 'capwatch'
+require "bundler/setup"
+require "capwatch"
 include Capwatch
 
 options = CLI.parse(ARGV)
 
+trap("SIGINT") {
+  system("clear")
+  exit 130
+}
+
 if options.telegram
-  Telegram.new(token: options.telegram).start
+  Telegram.new(options.telegram).start
 else
   loop do
-    table = Calculator.fund_hash(FundParser.new.fund, CoinMarketCap.fetch)
-    system('clear')
-    puts Console.draw_table(table)
+    config = FundConfig.new
+    provider = Providers::CoinMarketCap.new
+    fund = Fund.new(provider: provider, config: config)
+    system("clear")
+    puts fund.console_table
+    puts "\nHey there! This is a Demo Fund. Please set up your fund by editing the \"~/.capwatch\" in your home directory".green if config.demo?
     sleep options.tick
   end
 end
+
+
