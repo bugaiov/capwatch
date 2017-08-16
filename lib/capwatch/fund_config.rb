@@ -53,7 +53,7 @@ module Capwatch
     end
 
     def demo_fund
-      file_path = File.join(__dir__, "..", "..", "spec", "fixtures", "funds", "basic.json")
+      file_path = File.join(__dir__, "..", "..", "lib", "funds", "basic.json")
       demo_fund = File.expand_path(file_path)
       File.open(demo_fund).read
     end

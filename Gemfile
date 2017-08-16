@@ -7,5 +7,4 @@ gemspec
 
 group :test do
   gem "coveralls", require: false
-  gem "webmock"
 end

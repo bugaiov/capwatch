@@ -4,9 +4,7 @@ require "spec_helper"
 
 RSpec.describe Capwatch::FundConfig do
 
-  let(:basic)   { fixture_path 'funds/basic.json' }
-  let(:dynamic) { fixture_path 'funds/extreme.json' }
-  let(:extreme) { fixture_path 'funds/dynamic.json' }
+  let(:basic)   { "lib/funds/basic.json" }
 
   let(:no_config) { "~/.no_such_config_i_hope" }
   let(:no_subject_config) { subject.new(no_config) }

@@ -5,8 +5,6 @@ Coveralls.wear!
 
 require "bundler/setup"
 require "capwatch"
-require "webmock/rspec"
-require "support/fixtures"
 
 RSpec.configure do |config|
 
