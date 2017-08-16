@@ -13,7 +13,7 @@ Watch your cryptoportfolio in a console
     $ gem install capwatch
     $ capwatch
 
-Don't forget to edit `~/.capwatch` with the amount of cryptocurrencies that you hold.
+Don't forget to edit `~/.capwatch` with a number of cryptocurrencies you hold.
 
 ## Telegram
 
@@ -25,7 +25,7 @@ If you want to get portfolio notifications on demand into your telegram, you'll 
 
         $capwatch -e <bot_token>
 
-Currently Capwatch supports only two commands
+Currently, Capwatch supports only two commands
 
 - `/watch` - shows the entire portfolio
 - `/cap` - shows only the footer of the portfolio, e.g. summaries
