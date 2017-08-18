@@ -41,13 +41,27 @@ module Capwatch
     end
 
     def build
-      calculator.assign_quantity
-      calculator.assign_prices
-      calculator.distribution
+      assign_quantity
+      assign_prices
+      distribution
     end
 
-    def calculator
-      @calculator ||= FundCalculator.new(self)
+    def assign_quantity
+      coins.each do |coin|
+        coin.quantity = positions[coin.symbol]
+      end
+    end
+
+    def assign_prices
+      coins.each do |coin|
+        provider.update_coin(coin)
+      end
+    end
+
+    def distribution
+      coins.each do |coin|
+        coin.distribution = coin.value_btc / value_btc
+      end
     end
 
     def serialize

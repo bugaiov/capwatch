@@ -18,7 +18,7 @@ module Capwatch
     end
 
     def new_fund
-      config = FundConfig.new
+      config = Fund::Config.new
       provider = Providers::CoinMarketCap.new
       Fund.new(provider: provider, config: config)
     end

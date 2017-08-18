@@ -42,17 +42,5 @@ RSpec.describe Capwatch::Coin do
       expect(eth_coin.price_usd).to eq 5_000
     end
 
-    it '#eth' do
-    end
-
-    it "change_1h" do
-    end
-
-    it "change_24h" do
-    end
-
-    it "change_7d" do
-    end
-
   end
 end

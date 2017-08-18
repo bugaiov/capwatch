@@ -18,7 +18,7 @@ RSpec.describe Capwatch::Fund do
   end
 
   let(:config) do
-    config = Capwatch::FundConfig.new
+    config = Capwatch::Fund::Config.new
     config.name = config_name # override
     config.positions = config_positions
     config
