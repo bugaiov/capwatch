@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Cryptoportfolio watch"
   spec.description   = "Watches your cryptoportfolio"
-  spec.homepage      = "https://cryptowatch.one"
+  spec.homepage      = "https://bugaiov.com"
   spec.license       = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
