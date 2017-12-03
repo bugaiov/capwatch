@@ -14,6 +14,12 @@ trap("SIGINT") {
 
 if options.telegram
   Telegram.new(options.telegram).start
+elsif options.all
+  loop do
+    system("clear")
+    puts List::watch
+    sleep options.tick
+  end
 else
   loop do
     config = Fund::Config.new
@@ -25,5 +31,3 @@ else
     sleep options.tick
   end
 end
-
-

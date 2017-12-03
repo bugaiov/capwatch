@@ -8,10 +8,13 @@ module Capwatch
 
     def self.parse(args)
       options = OpenStruct.new
-      options.tick = 60 * 5
+      options.tick = 60
       opt_parser = OptionParser.new do |opts|
         opts.on("-t", "--tick [Integer]", Integer, "Tick Interval") do |t|
           options.tick = t
+        end
+        opts.on("-a", "--[no-]all", "Show All Cryptocurrencies") do |t|
+          options.all = t
         end
         opts.on("-e", "--telegram-token=", String) do |val|
           options.telegram = val
