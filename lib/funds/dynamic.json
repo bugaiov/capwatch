@@ -1,5 +1,6 @@
 {
   "name": "Dynamic Fund",
+  "currency": "USD",
   "symbols": {
     "NEO": 5102.04,
     "GAME": 41952.55,

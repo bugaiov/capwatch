@@ -2,20 +2,14 @@
 
 module Capwatch
   class List
-
-    def self.format(response, limit: 50)
-      response.first(limit).map do |coin|
-        [
-          coin["name"],
-          Console::Formatter.format_usd(coin["price_usd"]),
-          Console::Formatter.condition_color(Console::Formatter.format_percent(coin["percent_change_24h"])),
-          Console::Formatter.condition_color(Console::Formatter.format_percent(coin["percent_change_7d"]))
-        ]
-      end
+    attr_accessor :config
+    def initialize(config:)
+      @config = config
+      Console::Formatter.currency = config.currency
     end
 
-    def self.watch
-      response = Providers::CoinMarketCap.new.fetched_json
+    def watch
+      response = Providers::CoinMarketCap.new(config: config).fetched_json
       body = format(response)
       table  = Terminal::Table.new do |t|
         t.style = {
@@ -28,7 +22,7 @@ module Capwatch
         }
         t.headings = [
           "SYMBOL",
-          "PRICE",
+          "PRICE (#{config.currency})",
           "24H %",
           "7D %"
         ]
@@ -36,6 +30,23 @@ module Capwatch
       end
 
       table
+    end
+
+    private
+
+    def format(response, limit: 50)
+      response.first(limit).map do |coin|
+        [
+          coin["name"],
+          Console::Formatter.format_fiat(coin[price_attribute]),
+          Console::Formatter.condition_color(Console::Formatter.format_percent(coin["percent_change_24h"])),
+          Console::Formatter.condition_color(Console::Formatter.format_percent(coin["percent_change_7d"]))
+        ]
+      end
+    end
+
+    def price_attribute
+      "price_#{config.currency.downcase}"
     end
   end
 end

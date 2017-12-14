@@ -17,15 +17,18 @@ RSpec.describe Capwatch::Fund do
     JSON.parse({ "BTC": 10, "ETH": 20 }.to_json)
   end
 
+  let(:config_currency) { 'USD' }
+
   let(:config) do
     config = Capwatch::Fund::Config.new
     config.name = config_name # override
     config.positions = config_positions
+    config.currency = config_currency
     config
   end
 
   let(:provider) do
-    p = Capwatch::Providers::CoinMarketCap.new
+    p = Capwatch::Providers::CoinMarketCap.new(config: config)
     p.body = [
       {
           "id": "bitcoin",
@@ -100,10 +103,10 @@ RSpec.describe Capwatch::Fund do
         expect(subject["ETH"].price_btc).to eq 0.0731086
       end
 
-      it "#price_usd" do
+      it "#price_fiat" do
         subject
-        expect(subject["BTC"].price_usd).to eq 4082.92
-        expect(subject["ETH"].price_usd).to eq 298.824
+        expect(subject["BTC"].price_fiat).to eq 4082.92
+        expect(subject["ETH"].price_fiat).to eq 298.824
       end
 
       it "#price_eth" do
@@ -118,9 +121,9 @@ RSpec.describe Capwatch::Fund do
         expect(subject["ETH"].value_btc).to eq 0.0731086 * 20
       end
 
-      it "#value_usd" do
-        expect(subject["BTC"].value_usd).to eq 4082.92 * 10
-        expect(subject["ETH"].value_usd).to eq 298.824 * 20
+      it "#value_fiat" do
+        expect(subject["BTC"].value_fiat).to eq 4082.92 * 10
+        expect(subject["ETH"].value_fiat).to eq 298.824 * 20
       end
 
       it "#value_eth" do
@@ -145,8 +148,8 @@ RSpec.describe Capwatch::Fund do
         expect(subject.value_btc).to eq 1.0 * 10 + 0.0731086 * 20
       end
 
-      it "#value_usd" do
-        expect(subject.value_usd).to eq 4082.92 * 10 + 298.824 * 20
+      it "#value_fiat" do
+        expect(subject.value_fiat).to eq 4082.92 * 10 + 298.824 * 20
       end
 
       it "#value_eth" do

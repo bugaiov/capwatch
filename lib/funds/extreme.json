@@ -1,5 +1,6 @@
 {
   "name": "Extreme Fund",
+  "currency": "USD",
   "symbols": {
     "FLO": 2140.96,
     "DAR": 141.93,

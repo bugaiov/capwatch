@@ -14,12 +14,12 @@ module Capwatch
       @logger = Logger.new(STDOUT, Logger::DEBUG)
       @logger.debug "Starting telegram bot..."
       @bot = TelegramBot.new(token: token)
-      @console_formatter = Capwatch::Console::Formatter
+      Console::Formatter.currency = config.currency
     end
 
     def new_fund
       config = Fund::Config.new
-      provider = Providers::CoinMarketCap.new
+      provider = Providers::CoinMarketCap.new(config: config)
       Fund.new(provider: provider, config: config)
     end
 
@@ -42,14 +42,14 @@ module Capwatch
       JSON.parse(body).sort_by! { |e| -e["value_btc"].to_f }.map do |coin|
         [
           coin["name"],
-          Console::Formatter.format_usd(coin["price_usd"]),
+          Console::Formatter.format_fiat(coin["price_fiat"]),
           coin["quantity"],
           Console::Formatter.format_percent(coin["distribution"].to_f * 100),
           Console::Formatter.format_btc(coin["value_btc"]),
           Console::Formatter.format_eth(coin["value_eth"]),
           Console::Formatter.format_percent(coin["percent_change_24h"]),
           Console::Formatter.format_percent(coin["percent_change_7d"]),
-          Console::Formatter.format_usd(coin["value_usd"])
+          Console::Formatter.format_fiat(coin["value_fiat"])
         ]
       end
     end

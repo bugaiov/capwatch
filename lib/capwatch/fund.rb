@@ -20,8 +20,8 @@ module Capwatch
       coins.map(&:value_btc).sum
     end
 
-    def value_usd
-      coins.map(&:value_usd).sum
+    def value_fiat
+      coins.map(&:value_fiat).sum
     end
 
     def value_eth
@@ -70,7 +70,7 @@ module Capwatch
 
     def fund_totals
       {
-        value_usd: value_usd,
+        value_fiat: value_fiat,
         value_btc: value_btc,
         value_eth: value_eth,
         percent_change_24h: percent_change_24h,
@@ -79,7 +79,7 @@ module Capwatch
     end
 
     def console_table
-      Console.new(name = config.name, body = serialize, totals = fund_totals).draw_table
+      Console.new(name = config.name, currency = config.currency, body = serialize, totals = fund_totals).draw_table
     end
   end
 end

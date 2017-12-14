@@ -12,18 +12,19 @@ trap("SIGINT") {
   exit 130
 }
 
+config = Fund::Config.new
+
 if options.telegram
   Telegram.new(options.telegram).start
 elsif options.all
   loop do
     system("clear")
-    puts List::watch
+    puts List.new(config:config).watch
     sleep options.tick
   end
 else
   loop do
-    config = Fund::Config.new
-    provider = Providers::CoinMarketCap.new
+    provider = Providers::CoinMarketCap.new(config: config)
     fund = Fund.new(provider: provider, config: config)
     system("clear")
     puts fund.console_table

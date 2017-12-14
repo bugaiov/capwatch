@@ -3,10 +3,13 @@
 module Capwatch
   class Console
 
-    attr_accessor :name, :body, :totals
+    attr_accessor :name, :currency, :body, :totals
 
-    def initialize(name, body, totals)
+    def initialize(name, currency, body, totals)
+      Formatter.currency = currency
+
       @name   = name
+      @currency = currency
       @body   = format_body(body)
       @totals = format_totals(totals)
     end
@@ -15,14 +18,14 @@ module Capwatch
       JSON.parse(body).sort_by! { |e| -e["value_btc"].to_f }.map do |coin|
         [
           coin["name"],
-          Formatter.format_usd(coin["price_usd"]),
+          Formatter.format_fiat(coin["price_fiat"]),
           coin["quantity"],
           Formatter.format_percent(coin["distribution"].to_f * 100),
           Formatter.format_btc(coin["value_btc"]),
           Formatter.format_eth(coin["value_eth"]),
           Formatter.condition_color(Formatter.format_percent(coin["percent_change_24h"])),
           Formatter.condition_color(Formatter.format_percent(coin["percent_change_7d"])),
-          Formatter.format_usd(coin["value_usd"])
+          Formatter.format_fiat(coin["value_fiat"])
         ]
       end
     end
@@ -37,7 +40,7 @@ module Capwatch
         Formatter.format_eth(totals[:value_eth]),
         Formatter.condition_color(Formatter.format_percent(totals[:percent_change_24h])),
         Formatter.condition_color(Formatter.format_percent(totals[:percent_change_7d])),
-        Formatter.format_usd(totals[:value_usd]).bold
+        Formatter.format_fiat(totals[:value_fiat]).bold
       ]
     end
 
@@ -61,7 +64,7 @@ module Capwatch
           "ETH",
           "24H %",
           "7D %",
-          "USD"
+          currency
         ]
         body.each do |x|
           t << x
@@ -77,9 +80,11 @@ module Capwatch
     class Formatter
 
       class << self
+        attr_accessor :currency
 
-        def format_usd(n)
-          "$" + n.to_f.round(2).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+        def format_fiat(n)
+          value = n.to_f.round(2).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+          "#{symbol(currency)}#{value}"
         end
 
         def format_btc(value)
@@ -105,6 +110,43 @@ module Capwatch
           end
         end
 
+        def symbol(currency)
+          # as supported by coinmarketcap on 2017-12-12
+          {
+            "USD" => "$",
+            "DKK" => "kr.",
+            "JPY" => "¥",
+            "PLN" => "zł.",
+            "AUD" => "$",
+            "EUR" => "€",
+            "KRW" => "₩",
+            "RUB" => "₽",
+            "BRL" => "R$",
+            "GBP" => "￡",
+            "MXN" => "$",
+            "SEK" => "kr",
+            "CAD" => "$",
+            "HKD" => "$",
+            "MYR" => "RM",
+            "SGD" => "$",
+            "CHF" => "CHF",
+            "HUF" => "Ft",
+            "NOK" => "kr",
+            "THB" => "฿",
+            "CLP" => "$",
+            "IDR" => "Rp",
+            "NZD" => "$",
+            "TRY" => "₺",
+            "CNY" => "元",
+            "ILS" => "₪",
+            "PHP" => "₱",
+            "TWD" => "$",
+            "CZK" => "Kč",
+            "INR" => "₹",
+            "PKR" => "Rs",
+            "ZAR" => "R",
+          }.fetch(currency)
+        end
       end
 
     end # class Formatter

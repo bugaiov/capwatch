@@ -3,7 +3,7 @@
 module Capwatch
   class Coin
     attr_accessor :name, :symbol, :quantity,
-                  :price_usd, :price_btc,
+                  :price_fiat, :price_btc,
                   :distribution,
                   :percent_change_1h,
                   :percent_change_24h,
@@ -17,8 +17,8 @@ module Capwatch
       price_btc * quantity
     end
 
-    def value_usd
-      price_usd * quantity
+    def value_fiat
+      price_fiat * quantity
     end
 
     def value_eth
@@ -34,14 +34,14 @@ module Capwatch
         symbol: symbol,
         name: name,
         quantity: quantity,
-        price_usd: price_usd,
+        price_fiat: price_fiat,
         price_btc: price_btc,
         distribution: distribution,
         percent_change_1h: percent_change_1h,
         percent_change_24h: percent_change_24h,
         percent_change_7d: percent_change_7d,
         value_btc: value_btc,
-        value_usd: value_usd,
+        value_fiat: value_fiat,
         value_eth: value_eth,
         price_eth: price_eth,
       }

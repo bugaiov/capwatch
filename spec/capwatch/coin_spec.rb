@@ -7,7 +7,7 @@ RSpec.describe Capwatch::Coin do
     Capwatch::Coin.new do |coin|
       coin.name               = 'Bitcoin'
       coin.symbol             = 'BTC'
-      coin.price_usd          = 5_000
+      coin.price_fiat         = 5_000
       coin.price_btc          = 1
       coin.percent_change_1h  = 23
       coin.percent_change_24h = 25
@@ -19,7 +19,7 @@ RSpec.describe Capwatch::Coin do
     Capwatch::Coin.new do |coin|
       coin.name               = 'Ether'
       coin.symbol             = 'ETH'
-      coin.price_usd          = 5_000
+      coin.price_fiat         = 5_000
       coin.price_btc          = 0.1
       coin.percent_change_1h  = 70
       coin.percent_change_24h = 25
@@ -38,8 +38,8 @@ RSpec.describe Capwatch::Coin do
       expect(eth_coin.price_btc).to eq 0.1
     end
 
-    it '#usd' do
-      expect(eth_coin.price_usd).to eq 5_000
+    it '#fiat' do
+      expect(eth_coin.price_fiat).to eq 5_000
     end
 
   end

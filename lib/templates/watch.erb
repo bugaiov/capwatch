@@ -1,4 +1,4 @@
 <% body.each do |array| %>
 <% array.each do |value| %><%= value %>     <% end %>
 <% end %>
-<%= @console_formatter.format_btc(fund.fund_totals[:value_btc]) %>    <%= @console_formatter.format_eth(fund.fund_totals[:value_eth]) %>    <%= @console_formatter.format_percent(fund.fund_totals[:percent_change_24h]) %>   <%= @console_formatter.format_percent(fund.fund_totals[:percent_change_7d]) %>    <%= @console_formatter.format_usd(fund.fund_totals[:value_usd]) %>
+<%= @console_formatter.format_btc(fund.fund_totals[:value_btc]) %>    <%= @console_formatter.format_eth(fund.fund_totals[:value_eth]) %>    <%= @console_formatter.format_percent(fund.fund_totals[:percent_change_24h]) %>   <%= @console_formatter.format_percent(fund.fund_totals[:percent_change_7d]) %>    <%= @console_formatter.format_fiat(fund.fund_totals[:value_fiat]) %>
