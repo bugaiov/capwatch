@@ -34,10 +34,11 @@ module AnyBar
   end
 end
 
+@ports = [1738, 1739, 1740, 1741, 1742]
 
 trap("SIGINT") {
   system("clear")
-  AnyBar::Client.new.message("? ?") if options.anybar
+  @ports.each { |p| AnyBar::Client.new(p).message("quit") } if options.anybar
   exit 130
 }
 
@@ -59,12 +60,24 @@ elsif options.watch
     sleep options.tick
   end
 elsif options.anybar
+
+  @ports.each do |port|
+    system("ANYBAR_PORT=#{port} open -na AnyBar") unless %x{pgrep AnyBar | wc -w}.strip.to_i == @ports.size
+  end
+
   loop do
-    puts "Anybar mode..."
     fund = Fund.new(provider: Providers::CoinMarketCap.new(config: config), config: config)
-    demo!(config)
-    color = fund.fund_totals[:percent_change_7d] > 0 ? "green" : "red"
-    AnyBar::Client.new.message("#{color} #{fund.fund_totals[:value_eth].round(2)}")
+
+    {
+      @ports[4] => "white #{fund.fund_totals[:value_btc].round}",
+      @ports[3] => "white #{fund.fund_totals[:value_eth].round}",
+      @ports[2] => "white #{fund.fund_totals[:value_fiat].round / 1_000}",
+      @ports[1] => "#{fund.fund_totals[:percent_change_24h] > 0 ? "green" : "red"} #{fund.fund_totals[:percent_change_24h].round(2)}",
+      @ports[0] => "#{fund.fund_totals[:percent_change_7d] > 0 ? "green" : "red"} #{fund.fund_totals[:percent_change_7d].round(2)}"
+    }.each do |k,v|
+      AnyBar::Client.new(k).message(v)
+    end
+
     sleep options.tick
   end
 else
