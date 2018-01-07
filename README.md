@@ -15,6 +15,40 @@ Watch your cryptoportfolio in a console
 
 Don't forget to edit `~/.capwatch` with a number of cryptocurrencies you hold.
 
+## Remote Config
+
+If you want to store the configuration of the fund remotely, please do so by creating a file `~/.capwatch.remote`.
+It will automatically be read in priority to the local one. The file should just contain the URL which will yield fund.
+
+Example
+
+    $ cat ~/.capwatch.remote
+    http://yourhost.com/fund.json
+
+## Currency
+
+You can select which currency to use but editing the `"currency": "USD"` line in the fund. (default: USD)
+
+## CryptoList
+
+    $ capwatch -a
+
+Will show you the top 100 currencies sorted by market capitalization
+
+
+## Watch
+
+    $ capwatch -w
+
+You can watch you portfolio in real time by added the `-w` option
+
+
+## Anybar
+
+    $ capwatch --anybar
+
+Also please install [this fork](https://github.com/sfsam/AnyBar) of Anybar, works currently only on macOS
+
 ## Telegram
 
 If you want to get portfolio notifications on demand into your telegram, you'll need:
@@ -32,9 +66,9 @@ Currently, Capwatch supports only two commands
 
 Remember to start it on a server in a tmux window or as a daemon.
 
-## Data Providers
+## Available Data Providers
 
-- http://coinmarketcap.com
+1. http://coinmarketcap.com
 
 ## Demo Funds
 

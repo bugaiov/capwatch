@@ -6,29 +6,70 @@ require "capwatch"
 include Capwatch
 
 options = CLI.parse(ARGV)
+config = Fund::Config.new
+
+require 'socket'
+module AnyBar
+  class Client
+    DEFAULT_HOSTNAME = 'localhost'
+
+    attr_reader :message, :hostname
+
+    def initialize(port = 1738, hostname = DEFAULT_HOSTNAME)
+      @port     = port.to_i
+      @hostname = hostname
+    end
+
+    def message(message)
+      @message  = message
+      any_bar = UDPSocket.new
+      any_bar.connect hostname, @port
+      any_bar.send @message, 0
+      any_bar.close
+    end
+
+    def quit
+      self.message = 'quit'
+    end
+  end
+end
+
 
 trap("SIGINT") {
   system("clear")
+  AnyBar::Client.new.message("? ?") if options.anybar
   exit 130
 }
 
-config = Fund::Config.new
+def demo!(config)
+  puts "\nHey there! This is a Demo Fund. Please set up your fund by editing the \"#{Fund::Config::Local::FILE_NAME}\" in your home directory".green if config.demo?
+end
 
 if options.telegram
   Telegram.new(options.telegram).start
 elsif options.all
-  loop do
-    system("clear")
-    puts List.new(config:config).watch
-    sleep options.tick
-  end
-else
+  puts List.new(config:config).watch
+elsif options.watch
   loop do
     provider = Providers::CoinMarketCap.new(config: config)
     fund = Fund.new(provider: provider, config: config)
     system("clear")
     puts fund.console_table
-    puts "\nHey there! This is a Demo Fund. Please set up your fund by editing the \"#{Fund::Config::Local::FILE_NAME}\" in your home directory".green if config.demo?
+    demo!(config)
     sleep options.tick
   end
+elsif options.anybar
+  loop do
+    puts "Anybar mode..."
+    fund = Fund.new(provider: Providers::CoinMarketCap.new(config: config), config: config)
+    demo!(config)
+    color = fund.fund_totals[:percent_change_7d] > 0 ? "green" : "red"
+    AnyBar::Client.new.message("#{color} #{fund.fund_totals[:value_eth].round(2)}")
+    sleep options.tick
+  end
+else
+  provider = Providers::CoinMarketCap.new(config: config)
+  fund = Fund.new(provider: provider, config: config)
+  puts fund.console_table
+  demo!(config)
 end

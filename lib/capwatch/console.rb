@@ -7,7 +7,6 @@ module Capwatch
 
     def initialize(name, currency, body, totals)
       Formatter.currency = currency
-
       @name   = name
       @currency = currency
       @body   = format_body(body)
@@ -15,12 +14,12 @@ module Capwatch
     end
 
     def format_body(body)
-      JSON.parse(body).sort_by! { |e| -e["value_btc"].to_f }.map do |coin|
+      JSON.parse(body).sort_by! { |e| -e["value_btc"].to_f }.map.with_index(1) do |coin, i|
         [
-          coin["name"],
+          "#{i}) #{coin['name']}",
+          Formatter.format_percent(coin["distribution"].to_f * 100),
           Formatter.format_fiat(coin["price_fiat"]),
           coin["quantity"],
-          Formatter.format_percent(coin["distribution"].to_f * 100),
           Formatter.format_btc(coin["value_btc"]),
           Formatter.format_eth(coin["value_eth"]),
           Formatter.condition_color(Formatter.format_percent(coin["percent_change_24h"])),
@@ -46,7 +45,7 @@ module Capwatch
 
     def draw_table
       table  = Terminal::Table.new do |t|
-        t.title = name.upcase
+        t.title = name.upcase unless name.nil?
         t.style = {
           border_top: false,
           border_bottom: false,
@@ -57,9 +56,9 @@ module Capwatch
         }
         t.headings = [
           "ASSET",
+          "DIST %",
           "PRICE",
           "QUANTITY",
-          "DIST %",
           "BTC",
           "ETH",
           "24H %",

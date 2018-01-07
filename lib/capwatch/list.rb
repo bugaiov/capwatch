@@ -23,6 +23,7 @@ module Capwatch
         t.headings = [
           "SYMBOL",
           "PRICE (#{config.currency})",
+          "MARKET CAP (B) (#{config.currency})",
           "24H %",
           "7D %"
         ]
@@ -34,11 +35,12 @@ module Capwatch
 
     private
 
-    def format(response, limit: 50)
-      response.first(limit).map do |coin|
+    def format(response, limit: 100)
+      response.first(limit).map.with_index(1) do |coin, i|
         [
-          coin["name"],
+          "#{i}) #{coin["name"]}",
           Console::Formatter.format_fiat(coin[price_attribute]),
+          Console::Formatter.format_fiat(coin[market_cap].to_f / (1_000_000 * 1_000)),
           Console::Formatter.condition_color(Console::Formatter.format_percent(coin["percent_change_24h"])),
           Console::Formatter.condition_color(Console::Formatter.format_percent(coin["percent_change_7d"]))
         ]
@@ -47,6 +49,10 @@ module Capwatch
 
     def price_attribute
       "price_#{config.currency.downcase}"
+    end
+
+    def market_cap
+      "market_cap_#{config.currency.downcase}"
     end
   end
 end

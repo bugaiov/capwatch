@@ -54,7 +54,7 @@ module Capwatch
       private
 
       def ticker_url
-        "#{TICKER_URL}?convert=#{config.currency}"
+        "#{TICKER_URL}?limit=300&convert=#{config.currency}"
       end
 
       def price_attribute
