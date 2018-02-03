@@ -23,8 +23,9 @@ module Capwatch
       def coins
         positions.map do |symbol, quantity|
           Coin.new do |coin|
-            coin.symbol   = symbol
-            coin.quantity = quantity
+            coin.fiat_currency = currency
+            coin.symbol        = symbol
+            coin.quantity      = quantity
           end
         end
       end
