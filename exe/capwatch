@@ -36,9 +36,18 @@ end
 
 @ports = [1738, 1739, 1740, 1741, 1742]
 
+def terminate_anybar!
+  @ports.each { |p| AnyBar::Client.new(p).message("quit") } if options.anybar
+end
+
 trap("SIGINT") {
   system("clear")
-  @ports.each { |p| AnyBar::Client.new(p).message("quit") } if options.anybar
+  terminate_anybar!
+  exit 130
+}
+
+trap("TERM") {
+  terminate_anybar!
   exit 130
 }
 
