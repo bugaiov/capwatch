@@ -7,10 +7,20 @@ module Capwatch
                   :distribution,
                   :percent_change_1h,
                   :percent_change_24h,
-                  :percent_change_7d
+                  :percent_change_7d,
+                  :fiat_currency
 
     def initialize
       yield self if block_given?
+    end
+
+    def attributes=(attributes)
+      self.name               = attributes['name']
+      self.price_fiat         = attributes[price_attribute].to_f
+      self.price_btc          = attributes['price_btc'].to_f
+      self.percent_change_1h  = attributes['percent_change_1h'].to_f
+      self.percent_change_24h = attributes['percent_change_24h'].to_f
+      self.percent_change_7d  = attributes['percent_change_7d'].to_f
     end
 
     def value_btc
@@ -47,5 +57,10 @@ module Capwatch
       }
     end
 
+    private
+
+    def price_attribute
+      "price_#{fiat_currency.downcase}"
+    end
   end
 end
