@@ -95,7 +95,7 @@ module Capwatch
         end
 
         def format_percent(value)
-          format("%.2f%", value.to_f)
+          format("%.2f", value.to_f)
         end
 
         def condition_color(value)

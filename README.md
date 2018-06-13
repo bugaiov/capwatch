@@ -72,4 +72,4 @@ Remember to start it on a server in a tmux window or as a daemon.
 
 ## Demo Funds
 
-Fund examples can be found [here](spec/fixtures/funds) which were taken from [here](www.bluemagic.info)
+Fund examples can be found [here](spec/capwatch/fixtures/no_fiat_currency.json) which were taken from [here](http://www.bluemagic.info)
